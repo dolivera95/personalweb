@@ -1,0 +1,237 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Daniel Olivera | Desarrollador Web</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="d-flex flex-grow-1">
+                <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
+                <a class="navbar-brand d-none d-lg-inline-block" href="#">
+                    Daniel Olivera
+                </a>
+                <a class="navbar-brand-two mx-auto d-lg-none d-inline-block link-logo" href="#">
+                    <img class="img-logo" src="{% static 'core/img/logo01.png' %}" alt="logo">
+                </a>
+                <div class="w-100 text-right">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+                <ul class="navbar-nav ml-auto flex-nowrap">
+                    <li class="nav-item">
+                        <a href="#id_aboutme" class="nav-link m-2 menu-item nav-active">Sobre mi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#id_education" class="nav-link m-2 menu-item nav-active">Educación</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#id_skills" class="nav-link m-2 menu-item">Conocimientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#id_experiences" class="nav-link m-2 menu-item">Experiencia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#id_projects" class="nav-link m-2 menu-item">Proyectos</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="animated fadeIn fast  row div-header">
+                <div class="col-sm col-photo">
+                    <img class="profile" src="{% static 'core/img/profile.jpg' %}" alt="danielolivera">
+                </div>
+                <div class="col-sm col-profile">
+                    <h1 class="">Daniel Olivera</h1>
+                    <h2 class="">Desarrollador Web</h2>
+                    <ul class="list-inline">
+                        <li class="list-inline-item "><i class="social-networks fab fa-facebook-square"></i></li>
+                        <li class="list-inline-item "><i class="social-networks fab fa-linkedin"></i></li>
+                        <li class="list-inline-item "><i class="social-networks fab fa-github-square"></i></li>
+                    </ul>
+                    <h5><i class="fas fa-at"></i><a href="mailto:dolivera95@gmail.com"> dolivera95@gmail.com</a></h5>
+                    <h5><i class="fas fa-at"></i><a href="mailto:doliveradev@gmail.com"> doliveradev@gmail.com</a></h5>
+                    <h5><i class="fas fa-map-marker-alt"></i> Surco, Lima</h5>
+                </div>
+                <div class="col-sm div-cv">
+                    <div class="div-center">
+                        <a class="btn btn-dark btn-lg" href="https://www.google.com.pe">
+                            Descargar CV <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="div-main">
+        <section id="id_aboutme" class="animated fadeIn fast about section">
+            <div class="div-container text-justify">
+                <h3>Acerca de mí</h3>
+                <p>{{about.content|linebreaks}}</p>
+                
+                
+            </div>
+        </section>
+        <section  id="id_education" class="animated fadeIn fast skills section">
+                <div class="div-container">
+                    <h3>Educación</h3>
+                    <div class="list-group">
+                        {% for education in educations %}
+                            <div class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    {% if education.url %}
+                                        <h5 class="mb-1"><i class="fas fa-graduation-cap"></i><a href="{{ education.url }}">{{ education.title }}</a></h5>
+                                    {% else %}
+                                        <h5 class="mb-1"><i class="fas fa-graduation-cap"></i>{{ education.title }}</h5>
+                                    {% endif %}
+                                </div>
+                                <p class="mb-1">{{ education.entity }}</p>
+                                <small>{{ education.date | date:"F Y" }}</small>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+        </section>
+        <section id="id_skills" class="animated fadeIn fast skills section">
+                <div class="div-container">
+                    <h3>Conocimientos</h3>
+                    {% load tag_library %}
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5>Lenguajes de Programación</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {% for skill in skills %}
+                                    {% if  skill.type_skill|stringformat:"s" == 'Lenguajes de Programación' %}
+                                        <li class="list-group-item ">
+                                            {{ skill.title }}
+                                            <div class="progress">
+                                                    <div class="progress-bar {% if skill.level|to_int > 70 %}bg-success {% elif skill.level|to_int >= 50 %} bg-warning  {% else %}  {% endif %}" role="progressbar " style="width: {{ skill.level }}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">{{ skill.level }}%</div>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5>CMS, Frameworks, Librerías</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {% for skill in skills %}
+                                    {% if  skill.type_skill|stringformat:"s" == 'CMS, Frameworks, Librerias' %}
+                                        <li class="list-group-item ">
+                                            {{ skill.title }}
+                                            <div class="progress">
+                                            <div class="progress-bar {% if skill.level|to_int > 70 %}bg-success {% elif skill.level|to_int >= 50 %} bg-warning  {% else %}  {% endif %}" role="progressbar " style="width: {{ skill.level }}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">{{ skill.level }}%</div>
+                                        </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5>Base de Datos</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {% for skill in skills %}
+                                    {% if  skill.type_skill|stringformat:"s" == 'Base de Datos' %}
+                                        <li class="list-group-item ">
+                                            {{ skill.title }}
+                                            <div class="progress">
+                                            <div class="progress-bar {% if skill.level|to_int > 70 %}bg-success {% elif skill.level|to_int >= 50 %} bg-warning  {% else %}  {% endif %}" role="progressbar " style="width: {{ skill.level }}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">{{ skill.level }}%</div>
+                                        </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5>Herramientas</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                {% for skill in skills %}
+                                    {% if  skill.type_skill|stringformat:"s" == 'Herramientas' %}
+                                        <li class="list-group-item ">
+                                            {{ skill.title }}
+                                            <div class="progress">
+                                            <div class="progress-bar {% if skill.level|to_int > 70 %}bg-success {% elif skill.level|to_int >= 50 %} bg-warning  {% else %}  {% endif %}" role="progressbar " style="width: {{ skill.level }}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">{{ skill.level }}%</div>
+                                        </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section id="id_experiences" class="animated fadeIn fast experience section">
+                <div class="div-container">
+                    <h3>Experiencia</h3>
+                    {% for experience in experiences %}
+                    <div class="card">
+                      <div class="card-header">
+                        <h5>{{experience.title}}</h5>
+                      </div>
+                      <div class="card-body">
+                        <h5 class="card-title">{{experience.entity}} <small>({{ experience.start_date| date:"F Y"  }} - {{ experience.end_date| date:"F Y"  }})</small></h5>
+                        <p class="card-text">{{ experience.functions }}</p>
+                      </div>
+                    </div>
+                    <br>
+                    {% endfor %}
+                </div>
+        </section>
+        <section  id="id_projects" class="animated fadeIn fast projects section">
+                <div class="div-container">
+                    <h3>Proyectos</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque odio sint ad dolores aut doloribus officia labore corporis enim accusamus quidem officiis, quas cupiditate magnam, voluptatibus dolorem sapiente. Perspiciatis, ipsa.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque odio sint ad dolores aut doloribus officia labore corporis enim accusamus quidem officiis, quas cupiditate magnam, voluptatibus dolorem sapiente. Perspiciatis, ipsa.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque odio sint ad dolores aut doloribus officia labore corporis enim accusamus quidem officiis, quas cupiditate magnam, voluptatibus dolorem sapiente. Perspiciatis, ipsa.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque odio sint ad dolores aut doloribus officia labore corporis enim accusamus quidem officiis, quas cupiditate magnam, voluptatibus dolorem sapiente. Perspiciatis, ipsa.</p>
+                </div>
+        </section>
+        
+    </main>
+    
+
+      
+    
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{% static 'core/js/javascript.js' %}"></script>
+    <!--Materialize-->
+    
+</body>
+</html>
