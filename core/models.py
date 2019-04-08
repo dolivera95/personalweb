@@ -2,13 +2,13 @@ from django.db import models
 
 # Create your models here.
 
-# Model about tag of tecnologies
+# Model about tag of tecnologies of the projects
 class Tecnology(models.Model):
     name = models.CharField(verbose_name = "Nombre", max_length = 200)
 
     class Meta:
-        verbose_name = "tecnología"
-        verbose_name_plural = "categorías"
+        verbose_name = "tecnologia"
+        verbose_name_plural = "tecnologias"
     
     def __str__(self):
         return self.name
@@ -16,6 +16,7 @@ class Tecnology(models.Model):
 # Model about projects
 class Project(models.Model):
     title = models.CharField(verbose_name = "Título", max_length = 200)
+    image = models.ImageField(verbose_name="Imagen", null = True, blank = True)
     content = models.TextField(verbose_name = "Descripción")
     tecnologies = models.ManyToManyField(Tecnology, verbose_name = "Tecnologías")
     url = models.URLField(verbose_name = "Enlace", max_length = 200, null = True, blank = True)
@@ -29,6 +30,7 @@ class Project(models.Model):
         return self.title
 
 # Model about "about-me"
+# This model must only have one row of information
 class About(models.Model):
     title = models.CharField(verbose_name = "Título", max_length = 200, null = True, blank = True)
     content = models.TextField(verbose_name = "Acerca de mi")
@@ -55,6 +57,7 @@ class Education(models.Model):
         return self.title
 
 # Model about kind of skills
+# Examples: lenguaje de programación, framework, cms, base de datos, etc.
 class Type_Skill(models.Model):
     title = models.CharField(verbose_name = "Tipo de Habilidad", max_length = 200)
 
@@ -67,6 +70,7 @@ class Type_Skill(models.Model):
         
 
 # Model about skills
+# Example: python, django, wordpress, postgres, etc
 class Skill(models.Model):
     title = models.CharField(verbose_name = "Habilidad", max_length = 200)
     level = models.CharField(verbose_name ="Nivel", max_length = 200, null = True, blank = True)
@@ -95,8 +99,3 @@ class Experience(models.Model):
 
     def __str__(self):
         return self.title
-
-
-
-
-    
